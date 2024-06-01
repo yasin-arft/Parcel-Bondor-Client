@@ -1,11 +1,8 @@
 import {
   NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu"
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from '../../../assets/logo.png';
 import { FaRegBell } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
@@ -39,7 +36,7 @@ const Navbar = () => {
               {/* TODO: load user image */}
               <img src="https://i.ibb.co/n7xGsYb/images.jpg" alt="Profile picture" />
             </div> :
-            <Button onClick={() => navigate('/login')} className="bg-red">Login</Button>
+            <Button onClick={() => navigate('/login')} className="bg-red-light hover:bg-red-deep">Login</Button>
           }
         </div>
       </NavigationMenu>

@@ -6,9 +6,9 @@ const Main = () => {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto px-3">
+      <main className="container mx-auto px-3">
         <Outlet />
-      </div>
+      </main>
       <Footer />
     </div>
   );
