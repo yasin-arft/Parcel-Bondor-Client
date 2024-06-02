@@ -7,10 +7,11 @@ import logo from '../../../assets/logo.png';
 import { FaRegBell } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import NavItem from "./NavItem";
+import useAuth from "@/hooks/useAuth";
+import UserProfile from "./UserProfile";
 
 const Navbar = () => {
-  // TODO: load user
-  const user = false;
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const navData = [
@@ -32,10 +33,12 @@ const Navbar = () => {
             {navData.map((item, idx) => <NavItem key={idx} item={item} />)}
           </NavigationMenuList>
           {user ?
-            <div className="size-6 rounded-full">
-              {/* TODO: load user image */}
-              <img src="https://i.ibb.co/n7xGsYb/images.jpg" alt="Profile picture" />
-            </div> :
+            <UserProfile />
+            // <div className="size-10 rounded-full border-2 border-red-light overflow-hidden cursor-pointer">
+            //   {/* TODO: load user image */}
+            //   <img src="https://i.ibb.co/n7xGsYb/images.jpg" alt="Profile picture" />
+            // </div> :
+            :
             <Button onClick={() => navigate('/login')} className="bg-red-light hover:bg-red-deep">Login</Button>
           }
         </div>
