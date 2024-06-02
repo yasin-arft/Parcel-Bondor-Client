@@ -11,8 +11,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import SocialLogins from "../shared/socialLogins/SocialLogins"
+import useAuth from "@/hooks/useAuth"
+import toast from "react-hot-toast"
 
 const formSchema = z.object({
   name: z
@@ -29,7 +31,12 @@ const formSchema = z.object({
   //   .any()
 })
 
+
+
+
 const SignUp = () => {
+  const { createUser, updateUserProfile, setLoading } = useAuth();
+  const navigate = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -41,10 +48,28 @@ const SignUp = () => {
     }
   })
 
-  function onSubmit(values) {
-    console.log(values, 36)
-  }
+  const handleSignUP = async (data) => {
+    const { name, email, password } = data;
 
+    createUser(email, password)
+      .then(res => {
+        updateUserProfile(name, 'sample')
+          .then(() => {
+            toast.success('Registered successfully!');
+            navigate('/');
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+        console.log(res.user);
+      })
+      .catch(error => {
+        console.log(error);
+        setLoading(false);
+      })
+
+    console.log(data, 36)
+  }
 
   return (
     <section className="py-24">
@@ -53,7 +78,7 @@ const SignUp = () => {
           <div className="max-w-sm mx-auto border p-4 rounded-xl">
             <h2 className="text-3xl text-center font-semibold mb-6">Sign Up!</h2>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <form onSubmit={form.handleSubmit(handleSignUP)} className="space-y-8">
                 <FormField
                   control={form.control}
                   name="name"
