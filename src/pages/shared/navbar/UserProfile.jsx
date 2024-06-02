@@ -9,10 +9,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import useAuth from "@/hooks/useAuth";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const UserProfile = () => {
-  const { user } = useAuth();
+  const { user, logout, setLoading } = useAuth();
+
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        setLoading(false);
+        toast.success('Logged out successfully!');
+      })
+      .catch(() => {
+        setLoading(false);
+        toast.error('An unexpected error happened!');
+      })
+  }
 
   return (
     <div>
@@ -31,7 +44,7 @@ const UserProfile = () => {
             <Link to={'/dashboard'} className="font-semibold">Dashboard</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Button className="bg-red-light hover:bg-red-deep w-full">
+            <Button onClick={handleLogout} className="bg-red-light hover:bg-red-deep w-full">
               Logout
             </Button>
           </DropdownMenuItem>

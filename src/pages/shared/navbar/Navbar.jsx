@@ -33,12 +33,7 @@ const Navbar = () => {
             {navData.map((item, idx) => <NavItem key={idx} item={item} />)}
           </NavigationMenuList>
           {user ?
-            <UserProfile />
-            // <div className="size-10 rounded-full border-2 border-red-light overflow-hidden cursor-pointer">
-            //   {/* TODO: load user image */}
-            //   <img src="https://i.ibb.co/n7xGsYb/images.jpg" alt="Profile picture" />
-            // </div> :
-            :
+            <UserProfile /> :
             <Button onClick={() => navigate('/login')} className="bg-red-light hover:bg-red-deep">Login</Button>
           }
         </div>
