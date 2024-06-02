@@ -10,7 +10,7 @@ import NavItem from "./NavItem";
 
 const Navbar = () => {
   // TODO: load user
-  const user = true;
+  const user = false;
   const navigate = useNavigate();
 
   const navData = [
@@ -20,8 +20,8 @@ const Navbar = () => {
   ];
 
   return (
-    <header>
-      <NavigationMenu className="container max-w-full py-2 flex justify-between">
+    <header className="fixed top-0 left-0 w-full z-50">
+      <NavigationMenu className="container max-w-screen-2xl py-2 flex justify-between bg-white rounded-md shadow-md">
         <NavigationMenuList>
           <Link to={'/'}>
             <img src={logo} alt="logo" className="max-h-12" />
