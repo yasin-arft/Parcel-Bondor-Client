@@ -11,10 +11,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import SocialLogins from "../shared/socialLogins/SocialLogins"
+import useAuth from "@/hooks/useAuth"
+import toast from "react-hot-toast"
 
-const formSchema = z.object({
+const loginSchema = z.object({
   email: z
     .string()
     .min(1, { message: "This field has to be filled." })
@@ -25,17 +27,30 @@ const formSchema = z.object({
 })
 
 const Login = () => {
-  
+  const { loginUser, setLoading } = useAuth();
+  const navigate = useNavigate();
+
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: ''
     }
   })
 
-  function onSubmit(values) {
-    console.log(values, 36)
+  function handleLogin(data) {
+    const { email, password } = data;
+    loginUser(email, password)
+      .then(() => {
+        setLoading(false);
+        toast.success('Logged in successfully!')
+        navigate('/')
+      })
+      .catch(() => {
+        setLoading(false);
+        toast.error('An unexpected error happened!');
+      })
+    console.log(data, 53)
   }
 
   return (
@@ -45,7 +60,7 @@ const Login = () => {
           <div className="max-w-sm mx-auto border p-4 rounded-xl">
             <h2 className="text-3xl text-center font-semibold mb-6">Login!</h2>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-8">
                 <FormField
                   control={form.control}
                   name="email"

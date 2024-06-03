@@ -23,7 +23,7 @@ import SocialLogins from "../shared/socialLogins/SocialLogins"
 import useAuth from "@/hooks/useAuth"
 import toast from "react-hot-toast"
 
-const formSchema = z.object({
+const signUpSchema = z.object({
   name: z
     .string()
     .min(1, { message: "This field has to be filled." }),
@@ -39,9 +39,8 @@ const formSchema = z.object({
     .refine((files) => files.length > 0, 'File is required.'),
   role: z
     .string()
+    .min(1, { message: "Role must be selected." })
 })
-
-
 
 
 const SignUp = () => {
@@ -49,7 +48,7 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -77,6 +76,7 @@ const SignUp = () => {
       .catch(error => {
         console.log(error);
         setLoading(false);
+        toast.error('An unexpected error happened!');
       })
 
     console.log(data, 36)
