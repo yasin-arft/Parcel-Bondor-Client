@@ -22,6 +22,7 @@ import { Link, useNavigate } from "react-router-dom"
 import SocialLogins from "../shared/socialLogins/SocialLogins"
 import useAuth from "@/hooks/useAuth"
 import toast from "react-hot-toast"
+import axios from "axios"
 
 const signUpSchema = z.object({
   name: z
@@ -42,6 +43,9 @@ const signUpSchema = z.object({
     .min(1, { message: "Role must be selected." })
 })
 
+const image_hosting_key = import.meta.env.VITE_image_hosting_key;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+
 
 const SignUp = () => {
   const { createUser, updateUserProfile, setLoading } = useAuth();
@@ -60,24 +64,32 @@ const SignUp = () => {
 
   const handleSignUP = async (data) => {
     const { name, email, password } = data;
+    const profileImageFile = { image: data.photo[0] };
 
-    createUser(email, password)
-      .then(res => {
-        updateUserProfile(name, 'sample')
-          .then(() => {
-            toast.success('Registered successfully!');
-            navigate('/');
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-        console.log(res.user);
-      })
-      .catch(error => {
-        console.log(error);
-        setLoading(false);
-        toast.error('An unexpected error happened!');
-      })
+    const hostedImage = await axios.post(image_hosting_api, profileImageFile, {
+      headers: { 'content-type': 'multipart/form-data' }
+    });
+
+    if (hostedImage.data?.success) {
+      createUser(email, password)
+        .then(res => {
+          updateUserProfile(name, hostedImage.data?.data?.display_url)
+            .then(() => {
+              toast.success('Registered successfully!');
+              navigate('/');
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+          console.log(res.user);
+        })
+        .catch(error => {
+          console.log(error);
+          setLoading(false);
+          toast.error('An unexpected error happened!');
+        })
+    }
+    console.log(hostedImage);
 
     console.log(data, 36)
   }

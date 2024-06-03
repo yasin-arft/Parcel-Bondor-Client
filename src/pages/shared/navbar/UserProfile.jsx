@@ -32,9 +32,8 @@ const UserProfile = () => {
       <DropdownMenu>
         <DropdownMenuTrigger className="rounded-full border-2 border-red-light overflow-hidden cursor-pointer" >
           <Avatar>
-            {/* TODO: load user image */}
-            <AvatarImage src="https://i.ibb.co/n7xGsYb/images.jpg" />
-            <AvatarFallback>Profile</AvatarFallback>
+            <AvatarImage src={user?.photoURL} />
+            <AvatarFallback>{user?.displayName}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="mr-4">
