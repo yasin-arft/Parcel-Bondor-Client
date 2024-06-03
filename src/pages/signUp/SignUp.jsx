@@ -8,6 +8,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -27,8 +34,11 @@ const formSchema = z.object({
   password: z
     .string()
     .min(6, { message: "Username must be at least 6 characters.", }),
-  // photo: z
-  //   .any()
+  photo: z
+    .instanceof(FileList)
+    .refine((files) => files.length > 0, 'File is required.'),
+  role: z
+    .string()
 })
 
 
@@ -44,7 +54,8 @@ const SignUp = () => {
       name: '',
       email: '',
       password: '',
-      // photo: []
+      photo: [],
+      role: ''
     }
   })
 
@@ -118,19 +129,43 @@ const SignUp = () => {
                     </FormItem>
                   )}
                 />
-                {/* <FormField
+                <FormField
                   control={form.control}
                   name="photo"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Upload image</FormLabel>
                       <FormControl>
-                        <Input type="file" {...field} />
+                        <Input type="file"
+                          onChange={(e) => field.onChange(e.target.files)}
+                          ref={field.ref}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
-                /> */}
+                />
+                <FormField
+                  control={form.control}
+                  name="role"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Sign up as</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a role" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="user">User</SelectItem>
+                          <SelectItem value="deliveryMan">Delivery Man</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <Button type="submit" className="bg-red-light hover:bg-red-deep w-full" >Sign Up</Button>
               </form>
             </Form>
