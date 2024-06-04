@@ -23,6 +23,7 @@ import SocialLogins from "../shared/socialLogins/SocialLogins"
 import useAuth from "@/hooks/useAuth"
 import toast from "react-hot-toast"
 import axios from "axios"
+import useAxiosPublic from "@/hooks/useAxiosPublic"
 
 const signUpSchema = z.object({
   name: z
@@ -50,6 +51,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 const SignUp = () => {
   const { createUser, updateUserProfile, setLoading } = useAuth();
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
 
   const form = useForm({
     resolver: zodResolver(signUpSchema),
@@ -66,22 +68,39 @@ const SignUp = () => {
     const { name, email, password } = data;
     const profileImageFile = { image: data.photo[0] };
 
+    // host image
     const hostedImage = await axios.post(image_hosting_api, profileImageFile, {
       headers: { 'content-type': 'multipart/form-data' }
     });
 
+    const imageLink = hostedImage.data?.data?.display_url;
+
     if (hostedImage.data?.success) {
+      // after successfully hosting image create user
       createUser(email, password)
-        .then(res => {
-          updateUserProfile(name, hostedImage.data?.data?.display_url)
+        .then(() => {
+          updateUserProfile(name, imageLink)
             .then(() => {
-              toast.success('Registered successfully!');
-              navigate('/');
+              // store data to database
+              const user = {
+                name: name,
+                email: email,
+                role: data.role,
+                image: imageLink
+              }
+              axiosPublic.post('/users', user)
+                .then((res) => {
+                  if (res.data.insertedId) {
+                    toast.success('Registered successfully!');
+                    navigate('/');
+                    setLoading(false);
+                  }
+                })
             })
             .catch((error) => {
               console.log(error);
+              setLoading(false);
             })
-          console.log(res.user);
         })
         .catch(error => {
           console.log(error);
@@ -89,9 +108,6 @@ const SignUp = () => {
           toast.error('An unexpected error happened!');
         })
     }
-    console.log(hostedImage);
-
-    console.log(data, 36)
   }
 
   return (
