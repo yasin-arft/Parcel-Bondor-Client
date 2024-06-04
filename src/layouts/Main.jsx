@@ -8,7 +8,7 @@ const Main = () => {
     <div>
       <Navbar />
       <Toaster />
-      <main className="container mx-auto px-3">
+      <main className="container mx-auto px-3 mt-12">
         <Outlet />
       </main>
       <Footer />

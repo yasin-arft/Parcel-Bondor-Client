@@ -33,9 +33,9 @@ const DashboardSidebar = () => {
 
   return (
     <aside className="bg-red-light h-screen p-4 ">
-      <div className="bg-white rounded-md my-5">
+      <div className="bg-white rounded-md my-5 p-2">
         <Link to='/'>
-          <img src={logo} alt="Logo" className="h-12" />
+          <img src={logo} alt="Logo" className="h-10" />
         </Link>
       </div>
       <NavigationMenu className="items-start">

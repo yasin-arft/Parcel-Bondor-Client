@@ -54,7 +54,7 @@ const Login = () => {
   }
 
   return (
-    <section className="py-24">
+    <section>
       <div className="md:flex gap-6 items-center">
         <div className="flex-1 p-12">
           <div className="max-w-sm mx-auto border p-4 rounded-xl">
