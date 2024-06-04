@@ -38,7 +38,7 @@ const Login = () => {
     }
   })
 
-  function handleLogin(data) {
+  const handleLogin = (data) => {
     const { email, password } = data;
     loginUser(email, password)
       .then(() => {
@@ -50,7 +50,6 @@ const Login = () => {
         setLoading(false);
         toast.error('An unexpected error happened!');
       })
-    console.log(data, 53)
   }
 
   return (
@@ -87,7 +86,13 @@ const Login = () => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="bg-red-light hover:bg-red-deep w-full" >Login</Button>
+                <Button
+                  type="submit"
+                  className=" bg-red-light hover:bg-red-deep disabled:bg-gray-500 w-full"
+                  disabled={form.formState.isSubmitting}
+                >
+                  Login
+                </Button>
               </form>
             </Form>
           </div>

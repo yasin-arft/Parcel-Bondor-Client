@@ -194,7 +194,13 @@ const SignUp = () => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="bg-red-light hover:bg-red-deep w-full" >Sign Up</Button>
+                <Button
+                  type="submit"
+                  className=" bg-red-light hover:bg-red-deep disabled:bg-gray-500 w-full"
+                  disabled={form.formState.isSubmitting}
+                >
+                  Sign Up
+                </Button>
               </form>
             </Form>
           </div>
