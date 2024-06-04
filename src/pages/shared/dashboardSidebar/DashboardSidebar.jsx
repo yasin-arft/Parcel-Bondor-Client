@@ -21,10 +21,10 @@ const DashboardSidebar = () => {
     userType === 'deliveryMan' ?
       [
         { path: '/dashboard/delivery_list', text: 'My Delivery List' },
-        { path: '/dashboard/book_parcel', text: 'My Reviews' },
+        { path: '/dashboard/my_reviews', text: 'My Reviews' },
       ] :
       [
-        { path: '/dashboard/user_profile', text: 'My Profile' },
+        { path: '/dashboard/profile', text: 'My Profile' },
         { path: '/dashboard/book_parcel', text: 'Book A Parcel' },
         { path: '/dashboard/my_parcel', text: 'My Parcel' }
       ];

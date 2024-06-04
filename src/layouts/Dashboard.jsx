@@ -7,7 +7,7 @@ const Dashboard = () => {
   return (
     <div className="max-w-screen-2xl mx-auto flex gap-6">
       <DashboardSidebar />
-      <main>
+      <main className="flex-1 my-10">
         <Outlet />
       </main>
     </div>

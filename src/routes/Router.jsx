@@ -3,6 +3,7 @@ import Main from "@/layouts/Main";
 import Home from "@/pages/home/Home";
 import Login from "@/pages/login/Login";
 import SignUp from "@/pages/signUp/SignUp";
+import Profile from "@/pages/userDashboard/profile/Profile";
 import { createBrowserRouter } from "react-router-dom";
 
 const Router = createBrowserRouter([
@@ -27,7 +28,28 @@ const Router = createBrowserRouter([
   {
     path: '/dashboard',
     element: <Dashboard />,
-    children: []
+    children: [
+      // user's routes
+      {
+        path: 'profile',
+        element: <Profile />
+      },
+
+
+      // delivery man's routes
+      {
+        path: 'delivery_list'
+      },
+      {
+        path: 'my_reviews'
+      },
+
+
+      // admin's routes
+      {
+        path: 'all_parcels'
+      },
+    ]
   },
 ]);
 
