@@ -3,6 +3,7 @@ import Main from "@/layouts/Main";
 import Home from "@/pages/home/Home";
 import Login from "@/pages/login/Login";
 import SignUp from "@/pages/signUp/SignUp";
+import BookParcel from "@/pages/userDashboard/bookParcel/BookParcel";
 import Profile from "@/pages/userDashboard/profile/Profile";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -33,6 +34,10 @@ const Router = createBrowserRouter([
       {
         path: 'profile',
         element: <Profile />
+      },
+      {
+        path: 'book_parcel',
+        element: <BookParcel />
       },
 
 
