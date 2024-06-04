@@ -29,7 +29,6 @@ const SocialLogins = () => {
             navigate('/');
             setLoading(false);
           })
-        console.log(res.user);
       })
       .catch(() => {
         setLoading(false);

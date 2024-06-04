@@ -12,7 +12,7 @@ const Banner = () => {
         <form className="mx-auto max-w-max mt-10">
           <div className="flex gap-3 items-center">
             <Input type="text" name="search" placeholder="Search..." />
-            <Button type="submit" className="bg-red-light hover:bg-red-deep">Search</Button>
+            <Button type="submit" className="bg-red-light hover:bg-red-deep" disabled>Search</Button>
           </div>
         </form>
       </div>

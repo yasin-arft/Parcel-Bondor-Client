@@ -1,3 +1,4 @@
+import Dashboard from "@/layouts/Dashboard";
 import Main from "@/layouts/Main";
 import Home from "@/pages/home/Home";
 import Login from "@/pages/login/Login";
@@ -14,9 +15,6 @@ const Router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: '/dashboard'
-      },
-      {
         path: '/login',
         element: <Login />
       },
@@ -25,7 +23,12 @@ const Router = createBrowserRouter([
         element: <SignUp />
       }
     ]
-  }
+  },
+  {
+    path: '/dashboard',
+    element: <Dashboard />,
+    children: []
+  },
 ]);
 
 export default Router;
