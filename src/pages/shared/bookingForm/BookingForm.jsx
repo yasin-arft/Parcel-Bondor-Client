@@ -9,7 +9,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input";
-import useAuth from "@/hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
@@ -62,25 +61,11 @@ const bookingSchema = z.object({
 
 })
 // defaultValues,
-const BookingForm = ({ submitHandler }) => {
-  const { user } = useAuth();
+const BookingForm = ({ submitHandler, defaultValues }) => {
 
   const form = useForm({
     resolver: zodResolver(bookingSchema),
-    defaultValues: {
-      name: user?.displayName,
-      email: user?.email,
-      phone: '',
-      type: '',
-      weight: '',
-      price: 0,
-      receiverName: '',
-      receiverPhone: '',
-      deliveryAddress: '',
-      requestedDeliveryDate: new Date(),
-      deliveryLatitude: '',
-      deliveryLongitude: ''
-    }
+    defaultValues: defaultValues
   })
 
   const weight = form.watch("weight");
@@ -311,6 +296,7 @@ const BookingForm = ({ submitHandler }) => {
 };
 
 BookingForm.propTypes = {
+  defaultValues: PropTypes.object,
   submitHandler: PropTypes.func
 };
 
