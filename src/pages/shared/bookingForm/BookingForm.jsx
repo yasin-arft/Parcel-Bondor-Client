@@ -13,6 +13,7 @@ import useAuth from "@/hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
+import { useEffect } from 'react';
 
 const bookingSchema = z.object({
   name: z
@@ -28,7 +29,7 @@ const bookingSchema = z.object({
     .min(1, { message: "This field has to be filled." }),
   weight: z
     .string()
-    .min(1, { message: "This field has to be filled." }),
+    .min(0.1, { message: "Weight must be greater than 0." }),
   price: z
     .string()
     .min(1, { message: "This field has to be filled." }),
@@ -62,9 +63,26 @@ const BookingForm = ({ submitHandler }) => {
     defaultValues: {
       name: user?.displayName,
       email: user?.email,
-      price: "10"
+      weight: '',
+      price: '0'
     }
   })
+
+  const weight = form.watch("weight");
+
+  // set price dynamically
+  useEffect(() => {
+    if (weight) {
+      const calculatedPrice =
+        weight <= 1 ? weight * 50 :
+          weight <= 2 ? weight * 100 :
+            weight * 150;
+
+      form.setValue("price", calculatedPrice);
+    } else {
+      form.setValue("price", "0");
+    }
+  }, [weight, form]);
 
   return (
     <Form {...form}>
