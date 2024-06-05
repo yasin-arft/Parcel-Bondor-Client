@@ -1,10 +1,13 @@
 import SectionHeading from "@/components/sectionHeading/SectionHeading";
 import useAuth from "@/hooks/useAuth";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
 import BookingForm from "@/pages/shared/bookingForm/BookingForm";
 import { format } from "date-fns";
+import Swal from "sweetalert2";
 
 const BookParcel = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
   const defaultValues = {
     name: user?.displayName,
@@ -37,8 +40,17 @@ const BookParcel = () => {
       deliveryLongitude: parseFloat(data.deliveryLongitude),
       status: 'pending',
     }
-    console.log(data);
-    console.log(bookingData);
+
+    const res = await axiosSecure.post('/bookings', bookingData);
+    if (res.data.insertedId) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your booking has done!",
+        showConfirmButton: false,
+        timer: 2000
+      });
+    }
   }
 
   return (

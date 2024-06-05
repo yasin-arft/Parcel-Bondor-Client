@@ -60,13 +60,16 @@ const bookingSchema = z.object({
     .min(1, { message: "This field has to be filled." }),
 
 })
-// defaultValues,
+
+
 const BookingForm = ({ submitHandler, defaultValues }) => {
 
   const form = useForm({
     resolver: zodResolver(bookingSchema),
     defaultValues: defaultValues
   })
+
+  const { reset, formState: { isSubmitSuccessful } } = form;
 
   const weight = form.watch("weight");
 
@@ -83,6 +86,12 @@ const BookingForm = ({ submitHandler, defaultValues }) => {
       form.setValue("price", 0);
     }
   }, [weight, form]);
+
+  useEffect(() => {
+    if (!isSubmitSuccessful) { return }
+
+    reset();
+  }, [isSubmitSuccessful, reset]);
 
   return (
     <Form {...form}>

@@ -11,7 +11,6 @@ import useUser from "@/hooks/useUser";
 const DashboardSidebar = () => {
   const { userData } = useUser();
   const userRole = userData?.role;
-
   const navData = userRole === 'admin' ?
     [
       { path: '/dashboard', text: 'My Profile' },
