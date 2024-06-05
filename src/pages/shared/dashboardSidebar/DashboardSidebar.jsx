@@ -5,20 +5,22 @@ import {
 import NavItem from "../navbar/NavItem";
 import logo from '../../../assets/logo.png';
 import { Link } from "react-router-dom";
+import useUser from "@/hooks/useUser";
 
 
 const DashboardSidebar = () => {
+  const {userData} = useUser();
   // TODO: load user type form server
-  const userType = 'user';
+  const userRole = userData?.role;
 
-  const navData = userType === 'admin' ?
+  const navData = userRole === 'admin' ?
     [
       { path: '/dashboard/all_parcels', text: 'All Parcels' },
       { path: '/dashboard/all_users', text: 'All Users' },
       { path: '/dashboard/all_delivery_men', text: 'All Delivery Men' },
       { path: '/dashboard/statistics', text: 'Statistics' },
     ] :
-    userType === 'deliveryMan' ?
+    userRole === 'deliveryMan' ?
       [
         { path: '/dashboard/delivery_list', text: 'My Delivery List' },
         { path: '/dashboard/my_reviews', text: 'My Reviews' },
