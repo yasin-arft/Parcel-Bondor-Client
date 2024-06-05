@@ -9,12 +9,12 @@ import useUser from "@/hooks/useUser";
 
 
 const DashboardSidebar = () => {
-  const {userData} = useUser();
-  // TODO: load user type form server
+  const { userData } = useUser();
   const userRole = userData?.role;
 
   const navData = userRole === 'admin' ?
     [
+      { path: '/dashboard', text: 'My Profile' },
       { path: '/dashboard/all_parcels', text: 'All Parcels' },
       { path: '/dashboard/all_users', text: 'All Users' },
       { path: '/dashboard/all_delivery_men', text: 'All Delivery Men' },
@@ -22,11 +22,12 @@ const DashboardSidebar = () => {
     ] :
     userRole === 'deliveryMan' ?
       [
+        { path: '/dashboard', text: 'My Profile' },
         { path: '/dashboard/delivery_list', text: 'My Delivery List' },
         { path: '/dashboard/my_reviews', text: 'My Reviews' },
       ] :
       [
-        { path: '/dashboard/profile', text: 'My Profile' },
+        { path: '/dashboard', text: 'My Profile' },
         { path: '/dashboard/book_parcel', text: 'Book A Parcel' },
         { path: '/dashboard/my_parcel', text: 'My Parcel' }
       ];

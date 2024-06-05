@@ -6,6 +6,7 @@ import SignUp from "@/pages/signUp/SignUp";
 import BookParcel from "@/pages/userDashboard/bookParcel/BookParcel";
 import Profile from "@/pages/userDashboard/profile/Profile";
 import { createBrowserRouter } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 
 const Router = createBrowserRouter([
   {
@@ -30,14 +31,15 @@ const Router = createBrowserRouter([
     path: '/dashboard',
     element: <Dashboard />,
     children: [
+      {
+        path: '',
+        element: <PrivateRoute><Profile /></PrivateRoute>
+      },
+
       // user's routes
       {
-        path: 'profile',
-        element: <Profile />
-      },
-      {
         path: 'book_parcel',
-        element: <BookParcel />
+        element: <PrivateRoute><BookParcel /></PrivateRoute>
       },
 
 

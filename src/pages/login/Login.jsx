@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import SocialLogins from "../shared/socialLogins/SocialLogins"
 import useAuth from "@/hooks/useAuth"
 import toast from "react-hot-toast"
@@ -29,6 +29,8 @@ const loginSchema = z.object({
 const Login = () => {
   const { loginUser, setLoading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectedForm = location.state?.from?.pathname || '/';
 
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -44,7 +46,7 @@ const Login = () => {
       .then(() => {
         setLoading(false);
         toast.success('Logged in successfully!')
-        navigate('/')
+        navigate(redirectedForm)
       })
       .catch(() => {
         setLoading(false);
