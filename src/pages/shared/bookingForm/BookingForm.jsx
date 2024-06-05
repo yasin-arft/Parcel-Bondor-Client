@@ -14,6 +14,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
 import { useEffect } from 'react';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { Calendar } from "@/components/ui/calendar"
+import { format } from "date-fns"
+import { cn } from "@/lib/utils"
+import { CalendarIcon } from 'lucide-react';
 
 const bookingSchema = z.object({
   name: z
@@ -31,8 +40,7 @@ const bookingSchema = z.object({
     .string()
     .min(0.1, { message: "Weight must be greater than 0." }),
   price: z
-    .string()
-    .min(1, { message: "This field has to be filled." }),
+    .number(),
   receiverName: z
     .string()
     .min(1, { message: "This field has to be filled." }),
@@ -44,8 +52,7 @@ const bookingSchema = z.object({
     .string()
     .min(1, { message: "This field has to be filled." }),
   requestedDeliveryDate: z
-    .string()
-    .min(1, { message: "This field has to be filled." }),
+    .date(),
   deliveryLatitude: z
     .string()
     .min(1, { message: "This field has to be filled." }),
@@ -63,8 +70,16 @@ const BookingForm = ({ submitHandler }) => {
     defaultValues: {
       name: user?.displayName,
       email: user?.email,
+      phone: '',
+      type: '',
       weight: '',
-      price: '0'
+      price: 0,
+      receiverName: '',
+      receiverPhone: '',
+      deliveryAddress: '',
+      requestedDeliveryDate: new Date(),
+      deliveryLatitude: '',
+      deliveryLongitude: ''
     }
   })
 
@@ -80,7 +95,7 @@ const BookingForm = ({ submitHandler }) => {
 
       form.setValue("price", calculatedPrice);
     } else {
-      form.setValue("price", "0");
+      form.setValue("price", 0);
     }
   }, [weight, form]);
 
@@ -220,9 +235,37 @@ const BookingForm = ({ submitHandler }) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Requested delivery date</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="Receiver phone number" {...field} />
-              </FormControl>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-full pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(new Date(field.value), "dd/MM/yyyy")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date < new Date()
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
               <FormMessage />
             </FormItem>
           )}
