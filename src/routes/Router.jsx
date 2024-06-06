@@ -7,6 +7,7 @@ import BookParcel from "@/pages/userDashboard/bookParcel/BookParcel";
 import Profile from "@/pages/userDashboard/profile/Profile";
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
+import MyParcels from "@/pages/userDashboard/myParcels/MyParcels";
 
 const Router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const Router = createBrowserRouter([
       {
         path: 'book_parcel',
         element: <PrivateRoute><BookParcel /></PrivateRoute>
+      },
+      {
+        path: 'my_parcel',
+        element: <PrivateRoute><MyParcels /></PrivateRoute>
       },
 
 
