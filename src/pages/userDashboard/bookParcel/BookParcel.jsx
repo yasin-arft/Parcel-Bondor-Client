@@ -1,6 +1,7 @@
 import SectionHeading from "@/components/sectionHeading/SectionHeading";
 import useAuth from "@/hooks/useAuth";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
+import useMyBooking from "@/hooks/useMyBooking";
 import BookingForm from "@/pages/shared/bookingForm/BookingForm";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
@@ -8,6 +9,7 @@ import Swal from "sweetalert2";
 const BookParcel = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const { bookingRefetch } = useMyBooking();
 
   const defaultValues = {
     name: user?.displayName,
@@ -39,10 +41,12 @@ const BookParcel = () => {
       deliveryLatitude: parseFloat(data.deliveryLatitude),
       deliveryLongitude: parseFloat(data.deliveryLongitude),
       status: 'pending',
+      bookingDate: format(new Date(data.requestedDeliveryDate), "dd/MM/yyyy"),
     }
 
     const res = await axiosSecure.post('/bookings', bookingData);
     if (res.data.insertedId) {
+      bookingRefetch();
       Swal.fire({
         position: "center",
         icon: "success",
