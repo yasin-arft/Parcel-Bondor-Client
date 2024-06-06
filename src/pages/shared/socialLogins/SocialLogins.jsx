@@ -15,6 +15,7 @@ const SocialLogins = () => {
         // store data to database
         const user = {
           name: res.user.displayName,
+          phoneNumber: res.user.phoneNumber,
           email: res.user.email,
           role: 'user',
           image: res.user.photoURL
