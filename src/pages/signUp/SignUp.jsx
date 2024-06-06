@@ -29,6 +29,10 @@ const signUpSchema = z.object({
   name: z
     .string()
     .min(1, { message: "This field has to be filled." }),
+  phoneNumber: z
+    .string()
+    .min(11, { message: "Number length should be 11 digit", })
+    .max(11, { message: "Number length should be 11 digit", }),
   email: z
     .string()
     .min(1, { message: "This field has to be filled." })
@@ -57,6 +61,7 @@ const SignUp = () => {
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: '',
+      phoneNumber: '',
       email: '',
       password: '',
       photo: [],
@@ -65,7 +70,8 @@ const SignUp = () => {
   })
 
   const handleSignUP = async (data) => {
-    const { name, email, password } = data;
+    const { name, email, password, phoneNumber } = data;
+
     const profileImageFile = { image: data.photo[0] };
 
     // host image
@@ -84,6 +90,7 @@ const SignUp = () => {
               // store data to database
               const user = {
                 name: name,
+                phoneNumber: phoneNumber,
                 email: email,
                 role: data.role,
                 image: imageLink
@@ -114,10 +121,10 @@ const SignUp = () => {
     <section>
       <div className="md:flex gap-6 items-center">
         <div className="flex-1 p-12">
-          <div className="max-w-sm mx-auto border p-4 rounded-xl">
+          <div className="max-w-full mx-auto border p-4 rounded-xl">
             <h2 className="text-3xl text-center font-semibold mb-6">Sign Up!</h2>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(handleSignUP)} className="space-y-8">
+              <form onSubmit={form.handleSubmit(handleSignUP)} className="md:grid md:grid-cols-2 gap-5">
                 <FormField
                   control={form.control}
                   name="name"
@@ -126,6 +133,19 @@ const SignUp = () => {
                       <FormLabel>Name</FormLabel>
                       <FormControl>
                         <Input type="text" placeholder="Type name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="phoneNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number</FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder="Type your number" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -196,7 +216,7 @@ const SignUp = () => {
                 />
                 <Button
                   type="submit"
-                  className=" bg-red-light hover:bg-red-deep disabled:bg-gray-500 w-full"
+                  className=" bg-red-light hover:bg-red-deep disabled:bg-gray-500 w-full col-span-2"
                   disabled={form.formState.isSubmitting}
                 >
                   Sign Up

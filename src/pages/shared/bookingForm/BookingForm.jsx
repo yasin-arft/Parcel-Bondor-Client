@@ -30,8 +30,8 @@ const bookingSchema = z.object({
     .string(),
   phone: z
     .string()
-    .min(11, { message: "Number length should be 11", })
-    .max(11, { message: "Number length should be 11", }),
+    .min(11, { message: "Number length should be 11 digit", })
+    .max(11, { message: "Number length should be 11 digit", }),
   type: z
     .string()
     .min(1, { message: "This field has to be filled." }),
@@ -45,8 +45,8 @@ const bookingSchema = z.object({
     .min(1, { message: "This field has to be filled." }),
   receiverPhone: z
     .string()
-    .min(11, { message: "Number length should be 11", })
-    .max(11, { message: "Number length should be 11", }),
+    .min(11, { message: "Number length should be 11 digit", })
+    .max(11, { message: "Number length should be 11 digit", }),
   deliveryAddress: z
     .string()
     .min(1, { message: "This field has to be filled." }),
