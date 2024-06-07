@@ -13,11 +13,10 @@ const DashboardSidebar = () => {
   const userRole = userData?.role;
   const navData = userRole === 'admin' ?
     [
-      { path: '/dashboard', text: 'My Profile' },
+      { path: '/dashboard', text: 'Statistics' },
       { path: '/dashboard/all_parcels', text: 'All Parcels' },
       { path: '/dashboard/all_users', text: 'All Users' },
       { path: '/dashboard/all_delivery_men', text: 'All Delivery Men' },
-      { path: '/dashboard/statistics', text: 'Statistics' },
     ] :
     userRole === 'deliveryMan' ?
       [
@@ -30,7 +29,6 @@ const DashboardSidebar = () => {
         { path: '/dashboard/book_parcel', text: 'Book A Parcel' },
         { path: '/dashboard/my_parcel', text: 'My Parcel' }
       ];
-
 
 
   return (

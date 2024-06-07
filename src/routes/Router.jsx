@@ -4,11 +4,11 @@ import Home from "@/pages/home/Home";
 import Login from "@/pages/login/Login";
 import SignUp from "@/pages/signUp/SignUp";
 import BookParcel from "@/pages/userDashboard/bookParcel/BookParcel";
-import Profile from "@/pages/userDashboard/profile/Profile";
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import MyParcels from "@/pages/userDashboard/myParcels/MyParcels";
 import UpdateParcel from "@/pages/userDashboard/updateParcel/UpdateParcel";
+import DashboardHome from "@/pages/dashboardHome/DashboardHome";
 
 const Router = createBrowserRouter([
   {
@@ -35,7 +35,7 @@ const Router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <PrivateRoute><Profile /></PrivateRoute>
+        element: <PrivateRoute><DashboardHome /></PrivateRoute>
       },
 
       // user's routes
@@ -61,10 +61,15 @@ const Router = createBrowserRouter([
         path: 'my_reviews'
       },
 
-
       // admin's routes
       {
         path: 'all_parcels'
+      },
+      {
+        path: 'all_users'
+      },
+      {
+        path: 'all_delivery_men'
       },
     ]
   },

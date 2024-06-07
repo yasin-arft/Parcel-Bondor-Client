@@ -92,7 +92,7 @@ const BookingForm = ({ submitHandler, defaultValues, buttonText }) => {
     if (!isSubmitSuccessful) { return }
 
     reset();
-  }, [isSubmitSuccessful, reset, defaultValues]);
+  }, [isSubmitSuccessful, reset]);
 
   return (
     <Form {...form}>
