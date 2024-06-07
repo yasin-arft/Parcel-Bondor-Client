@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import MyParcels from "@/pages/userDashboard/myParcels/MyParcels";
 import UpdateParcel from "@/pages/userDashboard/updateParcel/UpdateParcel";
 import DashboardHome from "@/pages/dashboardHome/DashboardHome";
+import AllParcels from "@/pages/adminDashboard/allParcels/AllParcels";
 
 const Router = createBrowserRouter([
   {
@@ -61,9 +62,11 @@ const Router = createBrowserRouter([
         path: 'my_reviews'
       },
 
+
       // admin's routes
       {
-        path: 'all_parcels'
+        path: 'all_parcels',
+        element: <PrivateRoute><AllParcels /></PrivateRoute>
       },
       {
         path: 'all_users'

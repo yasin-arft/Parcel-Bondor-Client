@@ -2,9 +2,9 @@ import SectionHeading from "@/components/sectionHeading/SectionHeading";
 
 const Statistics = () => {
   return (
-    <div>
+    <section>
       <SectionHeading>Statistics</SectionHeading>
-    </div>
+    </section>
   );
 };
 

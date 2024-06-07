@@ -1,6 +1,6 @@
 import useUser from "@/hooks/useUser";
 import Profile from "../profile/Profile";
-import Statistics from "../adminDashboard/Statistics";
+import Statistics from "../adminDashboard/statistics/Statistics";
 
 const DashboardHome = () => {
   const { userData, isUserLoading } = useUser();
