@@ -86,7 +86,6 @@ const MyParcels = () => {
                   <TableCell className="text-center">
                     {
                       item.approxDeliveryDate ?
-                        // format(new Date(item.approxDeliveryDate), "dd/MM/yyyy") : '--'
                         dateFormat(item.approxDeliveryDate) : '--'
                     }
                   </TableCell>
@@ -135,7 +134,6 @@ const MyParcels = () => {
             }
           </TableBody>
         </Table>
-
       </div>
     </section>
   );
