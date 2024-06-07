@@ -8,6 +8,7 @@ import Profile from "@/pages/userDashboard/profile/Profile";
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import MyParcels from "@/pages/userDashboard/myParcels/MyParcels";
+import UpdateParcel from "@/pages/userDashboard/updateParcel/UpdateParcel";
 
 const Router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const Router = createBrowserRouter([
       {
         path: 'my_parcel',
         element: <PrivateRoute><MyParcels /></PrivateRoute>
+      },
+      {
+        path: 'update_parcel/:id',
+        element: <PrivateRoute><UpdateParcel /></PrivateRoute>
       },
 
 

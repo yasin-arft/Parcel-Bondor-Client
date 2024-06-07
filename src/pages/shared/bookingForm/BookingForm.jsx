@@ -19,9 +19,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Calendar } from "@/components/ui/calendar"
-import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { CalendarIcon } from 'lucide-react';
+import { dateFormat } from '@/utils/formatDate';
 
 const bookingSchema = z.object({
   name: z
@@ -54,15 +54,16 @@ const bookingSchema = z.object({
     .date(),
   deliveryLatitude: z
     .string()
-    .min(1, { message: "This field has to be filled." }),
+    .min(1, { message: "This field has to be filled." })
+    .refine(val => val >= -90 && val <= 90, { message: "Latitude must be between -90 and 90" }),
   deliveryLongitude: z
     .string()
-    .min(1, { message: "This field has to be filled." }),
-
+    .min(1, { message: "This field has to be filled." })
+    .refine(val => val >= -180 && val <= 180, { message: "Longitude must be between -180 and 180" }),
 })
 
 
-const BookingForm = ({ submitHandler, defaultValues }) => {
+const BookingForm = ({ submitHandler, defaultValues, buttonText }) => {
 
   const form = useForm({
     resolver: zodResolver(bookingSchema),
@@ -91,7 +92,7 @@ const BookingForm = ({ submitHandler, defaultValues }) => {
     if (!isSubmitSuccessful) { return }
 
     reset();
-  }, [isSubmitSuccessful, reset]);
+  }, [isSubmitSuccessful, reset, defaultValues]);
 
   return (
     <Form {...form}>
@@ -240,7 +241,7 @@ const BookingForm = ({ submitHandler, defaultValues }) => {
                       )}
                     >
                       {field.value ? (
-                        format(new Date(field.value), "dd/MM/yyyy")
+                        dateFormat(field.value)
                       ) : (
                         <span>Pick a date</span>
                       )}
@@ -297,7 +298,7 @@ const BookingForm = ({ submitHandler, defaultValues }) => {
           className="bg-red-light hover:bg-red-deep disabled:bg-gray-500 w-full col-span-2"
           disabled={form.formState.isSubmitting}
         >
-          Book Now
+          {buttonText}
         </Button>
       </form>
     </Form>
@@ -306,7 +307,8 @@ const BookingForm = ({ submitHandler, defaultValues }) => {
 
 BookingForm.propTypes = {
   defaultValues: PropTypes.object,
-  submitHandler: PropTypes.func
+  submitHandler: PropTypes.func,
+  buttonText: PropTypes.string
 };
 
 export default BookingForm;

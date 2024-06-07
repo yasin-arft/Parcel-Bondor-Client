@@ -3,7 +3,6 @@ import useAuth from "@/hooks/useAuth";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useMyBooking from "@/hooks/useMyBooking";
 import BookingForm from "@/pages/shared/bookingForm/BookingForm";
-import { format } from "date-fns";
 import Swal from "sweetalert2";
 
 const BookParcel = () => {
@@ -37,11 +36,11 @@ const BookParcel = () => {
       receiverName: data.receiverName,
       receiverPhone: data.receiverPhone,
       deliveryAddress: data.deliveryAddress,
-      requestedDeliveryDate: format(new Date(data.requestedDeliveryDate), "dd/MM/yyyy"),
+      requestedDeliveryDate: new Date(data.requestedDeliveryDate).toISOString(),
       deliveryLatitude: parseFloat(data.deliveryLatitude),
       deliveryLongitude: parseFloat(data.deliveryLongitude),
       status: 'pending',
-      bookingDate: format(new Date(data.requestedDeliveryDate), "dd/MM/yyyy"),
+      bookingDate: new Date().toISOString()
     }
 
     const res = await axiosSecure.post('/bookings', bookingData);
@@ -61,7 +60,10 @@ const BookParcel = () => {
     <section>
       <SectionHeading>Book a parcel</SectionHeading>
       <div className="p-4 max-w-2xl mx-auto">
-        <BookingForm defaultValues={defaultValues} submitHandler={handleBooking} />
+        <BookingForm
+          defaultValues={defaultValues}
+          submitHandler={handleBooking}
+          buttonText="Book Now" />
       </div>
     </section>
   );

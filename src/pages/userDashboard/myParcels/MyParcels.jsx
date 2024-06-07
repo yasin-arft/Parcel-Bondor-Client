@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table"
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useMyBooking from "@/hooks/useMyBooking";
+import { dateFormat } from "@/utils/formatDate";
 import { MdEdit, MdRateReview, MdPayment, MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -37,7 +38,6 @@ const MyParcels = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const res = await axiosSecure.delete(`bookings/${id}`);
-        console.log(res);
         if (res.data.deletedCount) {
           Swal.fire({
             title: "Canceled!",
@@ -48,9 +48,7 @@ const MyParcels = () => {
         }
       }
     });
-  }
-
-  console.log(bookingsData);
+  };
 
   return (
     <section>
@@ -80,9 +78,23 @@ const MyParcels = () => {
                 <TableRow key={item._id}>
                   <TableCell>{idx + 1}</TableCell>
                   <TableCell>{item.type}</TableCell>
-                  <TableCell>{item.requestedDeliveryDate}</TableCell>
-                  <TableCell className="text-center">{item.approxDeliveryDate || '--'}</TableCell>
-                  <TableCell>{item.bookingDate}</TableCell>
+                  <TableCell>
+                    {
+                      dateFormat(item.bookingDate)
+                    }
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {
+                      item.approxDeliveryDate ?
+                        // format(new Date(item.approxDeliveryDate), "dd/MM/yyyy") : '--'
+                        dateFormat(item.approxDeliveryDate) : '--'
+                    }
+                  </TableCell>
+                  <TableCell>
+                    {
+                      dateFormat(item.requestedDeliveryDate)
+                    }
+                  </TableCell>
                   <TableCell className="text-center">{item.DeliveryManID || '--'}</TableCell>
                   <TableCell className="first-letter:uppercase">{item.status}</TableCell>
                   <TableCell className="text-center text-xl">
