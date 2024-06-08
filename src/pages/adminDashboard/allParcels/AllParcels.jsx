@@ -13,6 +13,11 @@ import {
 import { dateFormat } from "@/utils/formatDate";
 import { Button } from "@/components/ui/button";
 import { BsThreeDots } from "react-icons/bs";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 const AllParcels = () => {
   const axiosSecure = useAxiosSecure();
@@ -68,11 +73,16 @@ const AllParcels = () => {
                   <TableCell>{item.price}</TableCell>
                   <TableCell className="first-letter:uppercase">{item.status}</TableCell>
                   <TableCell className="text-center text-xl">
-                    <Button
-                      variant="outline"
-                    >
-                      <BsThreeDots />
-                    </Button>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                        >
+                          <BsThreeDots />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent>Place content for the popover here.</PopoverContent>
+                    </Popover>
                   </TableCell>
                 </TableRow>
               ))
