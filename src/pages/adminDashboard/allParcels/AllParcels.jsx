@@ -40,7 +40,7 @@ const AllParcels = () => {
 
       <div>
         <Table>
-          <TableCaption>A list of your parcels.</TableCaption>
+          <TableCaption>A list of all parcels.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead></TableHead>

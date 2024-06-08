@@ -71,12 +71,12 @@ const Router = createBrowserRouter([
         element: <PrivateRoute><AllParcels /></PrivateRoute>
       },
       {
-        path: 'all_users',
-        element: <AllUsers />
-      },
-      {
         path: 'all_delivery_men',
         element: <AllDeliveryMen />
+      },
+      {
+        path: 'all_users',
+        element: <AllUsers />
       },
     ]
   },

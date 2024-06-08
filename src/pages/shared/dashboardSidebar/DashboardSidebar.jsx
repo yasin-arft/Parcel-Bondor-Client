@@ -15,8 +15,8 @@ const DashboardSidebar = () => {
     [
       { path: '/dashboard', text: 'Statistics' },
       { path: '/dashboard/all_parcels', text: 'All Parcels' },
-      { path: '/dashboard/all_users', text: 'All Users' },
       { path: '/dashboard/all_delivery_men', text: 'All Delivery Men' },
+      { path: '/dashboard/all_users', text: 'All Users' },
     ] :
     userRole === 'deliveryMan' ?
       [

@@ -21,14 +21,14 @@ const AllDeliveryMen = () => {
 
       <div>
         <Table>
-          <TableCaption>A list of your parcels.</TableCaption>
+          <TableCaption>A list of all delivery men.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead></TableHead>
               <TableHead>Delivery men&#39;s Name</TableHead>
               <TableHead>Phone Number</TableHead>
-              <TableHead>Number of parcel delivered</TableHead>
-              <TableHead>Average review</TableHead>
+              <TableHead>Parcel Delivered</TableHead>
+              <TableHead>Average Review</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
