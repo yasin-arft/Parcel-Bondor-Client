@@ -18,6 +18,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import ManageParcelForm from "./ManageParcelForm";
 
 const AllParcels = () => {
   const axiosSecure = useAxiosSecure();
@@ -31,8 +32,6 @@ const AllParcels = () => {
   });
 
   if (isLoading) return
-
-  console.log(data);
 
   return (
     <section>
@@ -81,7 +80,9 @@ const AllParcels = () => {
                           <BsThreeDots />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent>Place content for the popover here.</PopoverContent>
+                      <PopoverContent className="absolute top-0 right-0">
+                        <ManageParcelForm />
+                      </PopoverContent>
                     </Popover>
                   </TableCell>
                 </TableRow>

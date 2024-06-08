@@ -23,7 +23,7 @@ const AllUsers = () => {
 
       <div>
         <Table>
-          <TableCaption>A list of all delivery men.</TableCaption>
+          <TableCaption>A list of all users.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead></TableHead>
