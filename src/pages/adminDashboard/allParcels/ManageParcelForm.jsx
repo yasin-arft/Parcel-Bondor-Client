@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -27,6 +28,8 @@ import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import useUsersByRole from "@/hooks/useUsersByRole";
+import useAxiosSecure from '@/hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 const manageParcelSchema = z.object({
   deliveryManId: z
@@ -38,8 +41,9 @@ const manageParcelSchema = z.object({
 
 
 
-const ManageParcelForm = () => {
+const ManageParcelForm = ({ parcelId, refetchAllParcel }) => {
   const { data: deliveryMen, isLoading } = useUsersByRole('deliveryMan');
+  const axiosSecure = useAxiosSecure();
 
   const form = useForm({
     resolver: zodResolver(manageParcelSchema),
@@ -51,13 +55,25 @@ const ManageParcelForm = () => {
 
   if (isLoading) return
 
-  const handleManageParcel = (data) => {
+  const handleManageParcel = async (data) => {
     const bookingData = {
       deliveryManId: data.deliveryManId,
-      approxDeliveryDate: dateFormat( data.approxDeliveryDate),
+      approxDeliveryDate: new Date(data.approxDeliveryDate).toISOString(),
       status: 'On The Way'
     };
-    console.log(bookingData);
+
+    const res = await axiosSecure.patch(`/bookings/adminUpdate/${parcelId}`, bookingData);
+
+    if (res.data.modifiedCount) {
+      refetchAllParcel()
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Assigned successfully!",
+        showConfirmButton: false,
+        timer: 2000
+      });
+    }
   }
 
   return (
@@ -142,6 +158,11 @@ const ManageParcelForm = () => {
       </form>
     </Form>
   );
+};
+
+ManageParcelForm.propTypes = {
+  parcelId: PropTypes.string,
+  refetchAllParcel: PropTypes.func
 };
 
 export default ManageParcelForm;

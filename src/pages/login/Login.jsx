@@ -50,7 +50,7 @@ const Login = () => {
       })
       .catch(() => {
         setLoading(false);
-        toast.error('An unexpected error happened!');
+        toast.error('Incorrect email or password');
       })
   }
 

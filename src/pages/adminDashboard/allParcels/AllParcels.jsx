@@ -23,7 +23,7 @@ import ManageParcelForm from "./ManageParcelForm";
 const AllParcels = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['bookings'],
     queryFn: async () => {
       const res = await axiosSecure.get('/bookings');
@@ -81,7 +81,7 @@ const AllParcels = () => {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="absolute top-0 right-0">
-                        <ManageParcelForm />
+                        <ManageParcelForm parcelId={item._id} refetchAllParcel={refetch} />
                       </PopoverContent>
                     </Popover>
                   </TableCell>
