@@ -89,7 +89,6 @@ const AllParcels = () => {
             }
           </TableBody>
         </Table>
-
       </div>
     </section>
   );

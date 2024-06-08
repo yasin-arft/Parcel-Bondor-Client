@@ -10,6 +10,8 @@ import MyParcels from "@/pages/userDashboard/myParcels/MyParcels";
 import UpdateParcel from "@/pages/userDashboard/updateParcel/UpdateParcel";
 import DashboardHome from "@/pages/dashboardHome/DashboardHome";
 import AllParcels from "@/pages/adminDashboard/allParcels/AllParcels";
+import AllUsers from "@/pages/adminDashboard/allUsers/AllUsers";
+import AllDeliveryMen from "@/pages/adminDashboard/allDeliveryMen/AllDeliveryMen";
 
 const Router = createBrowserRouter([
   {
@@ -69,10 +71,12 @@ const Router = createBrowserRouter([
         element: <PrivateRoute><AllParcels /></PrivateRoute>
       },
       {
-        path: 'all_users'
+        path: 'all_users',
+        element: <AllUsers />
       },
       {
-        path: 'all_delivery_men'
+        path: 'all_delivery_men',
+        element: <AllDeliveryMen />
       },
     ]
   },
