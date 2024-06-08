@@ -37,7 +37,7 @@ const AllDeliveryMen = () => {
                 <TableRow key={item._id}>
                   <TableCell>{idx + 1}</TableCell>
                   <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.phoneNumber}</TableCell>
+                  <TableCell>{item.phoneNumber || 'N/A'}</TableCell>
 
                   {/* TODO: Load Bellow Date */}
                   <TableCell>N/A</TableCell>

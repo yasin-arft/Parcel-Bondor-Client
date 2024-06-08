@@ -80,7 +80,7 @@ const AllParcels = () => {
                           <BsThreeDots />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="absolute top-0 right-0">
+                      <PopoverContent className="mr-4">
                         <ManageParcelForm parcelId={item._id} refetchAllParcel={refetch} />
                       </PopoverContent>
                     </Popover>

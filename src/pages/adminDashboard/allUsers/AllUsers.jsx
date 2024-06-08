@@ -12,11 +12,31 @@ import {
 import useUsersByRole from "@/hooks/useUsersByRole";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { IoBicycleOutline } from "react-icons/io5";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AllUsers = () => {
-  const { data, isLoading } = useUsersByRole('user')
+  const { data, isLoading, refetch } = useUsersByRole('user');
+  const axiosSecure = useAxiosSecure();
 
   if (isLoading) return
+
+  const changeRole = async (id, role) => {
+    console.log(id, role);
+
+    const res = await axiosSecure.patch(`/users/adminUpdate/${id}`, { role: role });
+    if (res.data.modifiedCount) {
+      refetch();
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Role changed successfully!",
+        showConfirmButton: false,
+        timer: 2000
+      });
+    }
+  }
+
   return (
     <section>
       <SectionHeading>All users</SectionHeading>
@@ -50,6 +70,7 @@ const AllUsers = () => {
                     <Button
                       variant="outline"
                       className="text-center text-xl"
+                      onClick={() => changeRole(item._id, 'deliveryMan')}
                     >
                       <IoBicycleOutline />
                     </Button>
@@ -58,6 +79,7 @@ const AllUsers = () => {
                     <Button
                       variant="outline"
                       className="text-center text-2xl"
+                      onClick={() => changeRole(item._id, 'admin')}
                     >
                       <MdOutlineAdminPanelSettings />
                     </Button>
