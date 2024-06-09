@@ -22,9 +22,9 @@ const AllUsers = () => {
   if (isLoading) return
 
   const changeRole = async (id, role) => {
-    console.log(id, role);
 
     const res = await axiosSecure.patch(`/users/adminUpdate/${id}`, { role: role });
+    
     if (res.data.modifiedCount) {
       refetch();
       Swal.fire({
