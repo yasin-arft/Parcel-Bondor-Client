@@ -40,8 +40,8 @@ const MyParcels = () => {
         const res = await axiosSecure.delete(`bookings/${id}`);
         if (res.data.deletedCount) {
           Swal.fire({
-            title: "Canceled!",
-            text: "Your booking has been canceled.",
+            title: "Cancelled!",
+            text: "Your booking has been cancelled.",
             icon: "success"
           });
           bookingRefetch();

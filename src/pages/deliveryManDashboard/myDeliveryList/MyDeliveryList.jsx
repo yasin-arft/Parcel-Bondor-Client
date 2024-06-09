@@ -25,7 +25,7 @@ const MyDeliveryList = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['booking', id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/bookings/deliveryman/${id}`);
@@ -80,8 +80,7 @@ const MyDeliveryList = () => {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="mr-4">
-                        <ManageDeliveryActions />
-                        {/* <ManageParcelForm parcelId={item._id} refetchAllParcel={refetch} /> */}
+                        <ManageDeliveryActions parcelId={item._id} refetchMyList={refetch} />
                       </PopoverContent>
                     </Popover>
                   </TableCell>
