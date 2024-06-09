@@ -60,11 +60,11 @@ const Router = createBrowserRouter([
 
       // delivery man's routes
       {
-        path: 'delivery_list',
+        path: 'my_delivery_list/:id',
         element: <MyDeliveryList />
       },
       {
-        path: 'my_reviews',
+        path: 'my_reviews/:id',
         element: <MyReviews />
       },
 

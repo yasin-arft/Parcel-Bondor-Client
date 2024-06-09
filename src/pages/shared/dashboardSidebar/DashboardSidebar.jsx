@@ -21,8 +21,8 @@ const DashboardSidebar = () => {
     userRole === 'deliveryMan' ?
       [
         { path: '/dashboard', text: 'My Profile' },
-        { path: '/dashboard/delivery_list', text: 'My Delivery List' },
-        { path: '/dashboard/my_reviews', text: 'My Reviews' },
+        { path: `/dashboard/my_delivery_list/${userData._id}`, text: 'My Delivery List' },
+        { path: `/dashboard/my_reviews/${userData._id}`, text: 'My Reviews' },
       ] :
       [
         { path: '/dashboard', text: 'My Profile' },

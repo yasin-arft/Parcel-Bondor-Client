@@ -295,7 +295,7 @@ const BookingForm = ({ submitHandler, defaultValues, buttonText }) => {
         />
         <Button
           type="submit"
-          className="bg-red-light hover:bg-red-deep disabled:bg-gray-500 w-full col-span-2"
+          className="bg-red-light hover:bg-red-deep disabled:bg-gray-500 w-full col-span-2 mt-2"
           disabled={form.formState.isSubmitting}
         >
           {buttonText}

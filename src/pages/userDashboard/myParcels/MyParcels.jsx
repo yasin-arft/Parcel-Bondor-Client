@@ -94,7 +94,7 @@ const MyParcels = () => {
                       dateFormat(item.requestedDeliveryDate)
                     }
                   </TableCell>
-                  <TableCell className="text-center max-w-5 overflow-auto ">{item.deliveryManId || '--'}</TableCell>
+                  <TableCell className="text-center max-w-5 break-words">{item.deliveryManId || '--'}</TableCell>
                   <TableCell className="first-letter:uppercase">{item.status}</TableCell>
                   <TableCell className="text-center text-xl">
                     <Button
