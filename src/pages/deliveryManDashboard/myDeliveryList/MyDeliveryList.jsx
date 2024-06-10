@@ -35,9 +35,6 @@ const MyDeliveryList = () => {
 
   if (isLoading) return
 
-  // console.log(id);
-  console.log(data[0]);
-
   return (
     <section>
       <SectionHeading>My delivery list</SectionHeading>

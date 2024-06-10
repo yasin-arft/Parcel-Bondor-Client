@@ -16,6 +16,12 @@ import { dateFormat } from "@/utils/formatDate";
 import { MdEdit, MdRateReview, MdPayment, MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import GiveReviewForm from "./GiveReviewForm";
 
 
 const MyParcels = () => {
@@ -24,7 +30,7 @@ const MyParcels = () => {
   const axiosSecure = useAxiosSecure();
 
   if (isBookingLoading) return
-
+// console.log(bookingsData[0]._id);
   const handleCancelBooking = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -115,12 +121,19 @@ const MyParcels = () => {
                     </Button>
                   </TableCell>
                   <TableCell className="text-center text-xl">
-                    <Button
-                      variant="outline"
-                      disabled={item.status !== 'delivered'}
-                    >
-                      <MdRateReview />
-                    </Button>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          disabled={item.status !== 'Delivered'}
+                        >
+                          <MdRateReview />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="mr-4">
+                        <GiveReviewForm deliveryManId={item.deliveryManId} bookingId={item._id} />
+                      </PopoverContent>
+                    </Popover>
                   </TableCell>
                   <TableCell className="text-center text-xl">
                     <Button

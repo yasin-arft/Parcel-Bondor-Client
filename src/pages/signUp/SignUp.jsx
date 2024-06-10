@@ -53,7 +53,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 
 const SignUp = () => {
-  const { createUser, updateUserProfile, setLoading } = useAuth();
+  const { createUser, updateUserProfile, loading, setLoading } = useAuth();
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
 
@@ -104,13 +104,12 @@ const SignUp = () => {
                   }
                 })
             })
-            .catch((error) => {
-              console.log(error);
+            .catch(() => {
+              toast.error('An unexpected error happened!');
               setLoading(false);
             })
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
           setLoading(false);
           toast.error('An unexpected error happened!');
         })
@@ -217,7 +216,7 @@ const SignUp = () => {
                 <Button
                   type="submit"
                   className=" bg-red-light hover:bg-red-deep disabled:bg-gray-500 w-full col-span-2"
-                  disabled={form.formState.isSubmitting}
+                  disabled={loading}
                 >
                   Sign Up
                 </Button>

@@ -42,15 +42,13 @@ const AuthProvider = ({ children }) => {
 
   // observer
   useEffect(() => {
-    const unSubscribe = () => {
-      onAuthStateChanged(auth, (user) => {
-        setUser(user);
-        setLoading(false);
-      });
-    }
+    const unSubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false);
+    });
 
     return () => {
-      return unSubscribe();
+      unSubscribe();
     }
   }, []);
 

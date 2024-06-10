@@ -27,7 +27,7 @@ const loginSchema = z.object({
 })
 
 const Login = () => {
-  const { loginUser, setLoading } = useAuth();
+  const { loginUser, loading, setLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const redirectedForm = location.state?.from?.pathname || '/';
@@ -91,7 +91,7 @@ const Login = () => {
                 <Button
                   type="submit"
                   className=" bg-red-light hover:bg-red-deep disabled:bg-gray-500 w-full"
-                  disabled={form.formState.isSubmitting}
+                  disabled={loading}
                 >
                   Login
                 </Button>
