@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import useAuth from "@/hooks/useAuth";
 import {
   Form,
   FormControl,
@@ -27,7 +26,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-
+import { hostImage } from "@/utils/hostImage";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 
 const profileSchema = z.object({
@@ -37,9 +39,10 @@ const profileSchema = z.object({
 })
 
 const Profile = () => {
-  const { user } = useAuth();
-  const { userData, isUserLoading } = useUser();
-  
+  const [open, setOpen] = useState(false)
+  const { userData, isUserLoading, refetchUser } = useUser();
+  const axiosSecure = useAxiosSecure();
+
   const form = useForm({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -49,8 +52,25 @@ const Profile = () => {
 
   if (isUserLoading) return
 
-  const handleUpdateProfile = (data) => {
-    console.log(data);
+  const handleUpdateProfile = async (data) => {
+    const profileImageFile = { image: data.photo[0] };
+
+    // host image
+    const hostedImage = await hostImage(profileImageFile);
+    const imageLink = hostedImage.data?.display_url;
+
+    const updateUser = {
+      image: imageLink
+    }
+
+    if (hostedImage?.success) {
+      const res = await axiosSecure.patch(`/users/${userData._id}`, updateUser);
+      if (res.data.modifiedCount) {
+        toast.success('Profile picture updated!');
+        refetchUser();
+        setOpen(false);
+      }
+    }
   }
 
   return (
@@ -58,10 +78,10 @@ const Profile = () => {
       <Card className="md:flex md:items-center md:gap-5">
         <CardHeader>
           <Avatar className="size-40 mx-auto">
-            <AvatarImage src={user?.photoURL} />
-            <AvatarFallback>{user?.displayName}</AvatarFallback>
+            <AvatarImage src={userData?.image} />
+            <AvatarFallback>{userData?.name}</AvatarFallback>
           </Avatar>
-          <Dialog>
+          <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button
                 className=" bg-red-light hover:bg-red-deep disabled:bg-gray-500"
@@ -95,7 +115,7 @@ const Profile = () => {
                   <Button
                     type="submit"
                     className=" bg-red-light hover:bg-red-deep disabled:bg-gray-500 w-full"
-                    disabled={isUserLoading}
+                    disabled={form.formState.isSubmitting}
                   >
                     Update Profile
                   </Button>
