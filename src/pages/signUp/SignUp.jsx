@@ -22,8 +22,8 @@ import { Link, useNavigate } from "react-router-dom"
 import SocialLogins from "../shared/socialLogins/SocialLogins"
 import useAuth from "@/hooks/useAuth"
 import toast from "react-hot-toast"
-import axios from "axios"
 import useAxiosPublic from "@/hooks/useAxiosPublic"
+import { hostImage } from "@/utils/hostImage"
 
 const signUpSchema = z.object({
   name: z
@@ -48,10 +48,6 @@ const signUpSchema = z.object({
     .min(1, { message: "Role must be selected." })
 })
 
-const image_hosting_key = import.meta.env.VITE_image_hosting_key;
-const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
-
-
 const SignUp = () => {
   const { createUser, updateUserProfile, loading, setLoading } = useAuth();
   const navigate = useNavigate();
@@ -75,13 +71,10 @@ const SignUp = () => {
     const profileImageFile = { image: data.photo[0] };
 
     // host image
-    const hostedImage = await axios.post(image_hosting_api, profileImageFile, {
-      headers: { 'content-type': 'multipart/form-data' }
-    });
+    const hostedImage = await hostImage(profileImageFile);
+    const imageLink = hostedImage.data?.display_url;
 
-    const imageLink = hostedImage.data?.data?.display_url;
-
-    if (hostedImage.data?.success) {
+    if (hostedImage?.success) {
       // after successfully hosting image create user
       createUser(email, password)
         .then(() => {
