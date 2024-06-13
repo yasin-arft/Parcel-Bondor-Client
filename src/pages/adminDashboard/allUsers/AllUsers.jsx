@@ -9,22 +9,30 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import useUsersByRole from "@/hooks/useUsersByRole";
+// import useUsersByRole from "@/hooks/useUsersByRole";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { IoBicycleOutline } from "react-icons/io5";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 const AllUsers = () => {
-  const { data, isLoading, refetch } = useUsersByRole('user');
+  // const { data, isLoading, refetch } = useUsersByRole('user');
   const axiosSecure = useAxiosSecure();
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ['all user'],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/users/user');
+      return res.data; 
+    }
+  });
 
   if (isLoading) return
 
   const changeRole = async (id, role) => {
 
     const res = await axiosSecure.patch(`/users/adminUpdate/${id}`, { role: role });
-    
+
     if (res.data.modifiedCount) {
       refetch();
       Swal.fire({
@@ -49,8 +57,8 @@ const AllUsers = () => {
               <TableHead></TableHead>
               <TableHead>User&#39;s Name</TableHead>
               <TableHead>Phone Number</TableHead>
-              <TableHead>Parcel Booked</TableHead>
-              <TableHead>Total Spent</TableHead>
+              <TableHead className="text-center">Total Parcel Booked</TableHead>
+              <TableHead className="text-center">Total Spent</TableHead>
               <TableHead className="text-center">Make Delivery Men</TableHead>
               <TableHead className="text-center">Make Admin</TableHead>
             </TableRow>
@@ -62,10 +70,8 @@ const AllUsers = () => {
                   <TableCell>{idx + 1}</TableCell>
                   <TableCell>{item.name}</TableCell>
                   <TableCell>{item.phoneNumber || 'N/A'}</TableCell>
-
-                  {/* TODO: Load Bellow Date */}
-                  <TableCell>N/A</TableCell>
-                  <TableCell>N/A</TableCell>
+                  <TableCell className="text-center">{item.totalBookings}</TableCell>
+                  <TableCell className="text-center">{item.totalSpent}</TableCell>
                   <TableCell className="text-center">
                     <Button
                       variant="outline"
