@@ -9,11 +9,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import useAuth from "@/hooks/useAuth";
+import useUser from "@/hooks/useUser";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const UserProfile = () => {
-  const { user, logout, setLoading } = useAuth();
+  const { logout, setLoading } = useAuth();
+  const { userData } = useUser();
 
   const handleLogout = () => {
     logout()
@@ -32,12 +34,12 @@ const UserProfile = () => {
       <DropdownMenu>
         <DropdownMenuTrigger className="rounded-full border-2 border-red-light overflow-hidden cursor-pointer" >
           <Avatar>
-            <AvatarImage src={user?.photoURL} />
-            <AvatarFallback>{user?.displayName}</AvatarFallback>
+            <AvatarImage src={userData?.image} />
+            <AvatarFallback>{userData?.name}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="mr-4">
-          <DropdownMenuLabel className="text-center text-xl">{user?.displayName}</DropdownMenuLabel>
+          <DropdownMenuLabel className="text-center text-xl">{userData?.name}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Link to={'/dashboard'} className="font-semibold">Dashboard</Link>

@@ -1,6 +1,5 @@
 import SectionHeading from "@/components/sectionHeading/SectionHeading";
 import { Button } from "@/components/ui/button";
-
 import {
   Table,
   TableBody,
@@ -22,15 +21,27 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import GiveReviewForm from "./GiveReviewForm";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { CiFilter } from "react-icons/ci";
+import { useState } from "react";
 
 
 const MyParcels = () => {
+  const [filterBy, setFilterBy] = useState('');
   const navigate = useNavigate();
-  const { bookingsData, isBookingLoading, bookingRefetch } = useMyBooking();
+  const { bookingsData, isBookingLoading, bookingRefetch } = useMyBooking(filterBy);
   const axiosSecure = useAxiosSecure();
 
   if (isBookingLoading) return
-// console.log(bookingsData[0]._id);
+
   const handleCancelBooking = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -71,7 +82,27 @@ const MyParcels = () => {
               <TableHead>Approx. Delivery Date</TableHead>
               <TableHead>Booking Date</TableHead>
               <TableHead>Delivery Man ID</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead className="flex justify-between items-center">
+                Status
+
+                {/* filter by status */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="ml-2">
+                    <CiFilter className="text-black text-lg" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuRadioGroup value={filterBy} onValueChange={setFilterBy}>
+                      <DropdownMenuRadioItem value="">All</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="Pending">Pending</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="On The Way">On The way</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="Delivered">Delivered</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="Cancelled">Cancelled</DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableHead>
               <TableHead>Update</TableHead>
               <TableHead>Cancel</TableHead>
               <TableHead>Review</TableHead>
@@ -106,7 +137,7 @@ const MyParcels = () => {
                     <Button
                       onClick={() => navigate(`/dashboard/update_parcel/${item._id}`)}
                       variant="outline"
-                      disabled={item.status !== 'pending'}
+                      disabled={item.status !== 'Pending'}
                     >
                       <MdEdit />
                     </Button>
@@ -115,7 +146,7 @@ const MyParcels = () => {
                     <Button
                       onClick={() => handleCancelBooking(item._id)}
                       variant="outline"
-                      disabled={item.status !== 'pending'}
+                      disabled={item.status !== 'Pending'}
                     >
                       <MdDelete />
                     </Button>

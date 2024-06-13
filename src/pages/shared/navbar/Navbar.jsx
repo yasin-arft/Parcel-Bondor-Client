@@ -11,7 +11,7 @@ import useAuth from "@/hooks/useAuth";
 import UserProfile from "./UserProfile";
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
 
   const navData = [
@@ -32,9 +32,10 @@ const Navbar = () => {
           <NavigationMenuList>
             {navData.map((item, idx) => <NavItem key={idx} item={item} />)}
           </NavigationMenuList>
-          {user ?
-            <UserProfile /> :
-            <Button onClick={() => navigate('/login')} className="bg-red-light hover:bg-red-deep">Login</Button>
+          {loading ? 'Loading...' :
+            user ?
+              <UserProfile /> :
+              <Button onClick={() => navigate('/login')} className="bg-red-light hover:bg-red-deep">Login</Button>
           }
         </div>
       </NavigationMenu>

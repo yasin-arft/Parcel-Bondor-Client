@@ -39,7 +39,7 @@ const BookParcel = () => {
       requestedDeliveryDate: new Date(data.requestedDeliveryDate).toISOString(),
       deliveryLatitude: parseFloat(data.deliveryLatitude),
       deliveryLongitude: parseFloat(data.deliveryLongitude),
-      status: 'pending',
+      status: 'Pending',
       bookingDate: new Date().toISOString()
     }
 
