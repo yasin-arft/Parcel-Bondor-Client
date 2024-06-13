@@ -8,12 +8,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import useUsersByRole from "@/hooks/useUsersByRole";
+import useAuth from "@/hooks/useAuth";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const AllDeliveryMen = () => {
-  const { data, isLoading } = useUsersByRole('deliveryMan')
+  const { user, loading } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
-  if (isLoading) return
+  const { data, isLoading } = useQuery({
+    queryKey: ['all deliverymen', user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/users/deliveryman');
+      return res.data;
+    }
+  });
+
+  if (loading || isLoading) return
 
   return (
     <section>
@@ -27,8 +38,8 @@ const AllDeliveryMen = () => {
               <TableHead></TableHead>
               <TableHead>Delivery men&#39;s Name</TableHead>
               <TableHead>Phone Number</TableHead>
-              <TableHead>Parcel Delivered</TableHead>
-              <TableHead>Average Review</TableHead>
+              <TableHead className="text-center">Total Parcel Delivered</TableHead>
+              <TableHead className="text-center">Average Rating</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -38,10 +49,8 @@ const AllDeliveryMen = () => {
                   <TableCell>{idx + 1}</TableCell>
                   <TableCell>{item.name}</TableCell>
                   <TableCell>{item.phoneNumber || 'N/A'}</TableCell>
-
-                  {/* TODO: Load Bellow Date */}
-                  <TableCell>N/A</TableCell>
-                  <TableCell>N/A</TableCell>
+                  <TableCell className="text-center">{item.totalDelivered}</TableCell>
+                  <TableCell className="text-center">{item.averageRatings || 'No ratings yet'}</TableCell>
                 </TableRow>
               ))
             }

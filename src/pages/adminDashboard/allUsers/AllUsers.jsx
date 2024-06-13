@@ -9,25 +9,26 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-// import useUsersByRole from "@/hooks/useUsersByRole";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { IoBicycleOutline } from "react-icons/io5";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
+import useAuth from "@/hooks/useAuth";
 
 const AllUsers = () => {
-  // const { data, isLoading, refetch } = useUsersByRole('user');
+  const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
+
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['all user'],
+    queryKey: ['all user', user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get('/users/user');
-      return res.data; 
+      return res.data;
     }
   });
 
-  if (isLoading) return
+  if (loading || isLoading) return
 
   const changeRole = async (id, role) => {
 
