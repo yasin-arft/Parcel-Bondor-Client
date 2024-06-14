@@ -80,7 +80,8 @@ const Router = createBrowserRouter([
       },
       {
         path: 'all_users',
-        element: <AllUsers />
+        element: <AllUsers />,
+        loader: () => fetch('http://localhost:5000/totalUser')
       },
     ]
   },

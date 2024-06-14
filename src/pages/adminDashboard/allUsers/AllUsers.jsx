@@ -15,10 +15,30 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "@/hooks/useAuth";
+import { useLoaderData } from "react-router-dom";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+import { useState } from "react";
+
 
 const AllUsers = () => {
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
+
+  // pagination related variables
+  const { totalUser } = useLoaderData();
+  const totalPages = Math.ceil(totalUser / 5);
+  const pageNumbers = [...Array(totalPages).keys()];
+  const [currentPage, setCurrentPage] = useState(0);
+  // console.log(pageNumbers);
+  // console.log(totalPages);
+  console.log(currentPage);
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['all user', user?.email],
@@ -52,7 +72,6 @@ const AllUsers = () => {
 
       <div>
         <Table>
-          <TableCaption>A list of all users.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead></TableHead>
@@ -97,6 +116,40 @@ const AllUsers = () => {
           </TableBody>
         </Table>
       </div>
+      {/* <div className="space-x-2 text-center mt-4">
+        {
+          pageNumbers.map(page => <Button key={page}>{page}</Button>)
+        }
+      </div> */}
+      <Pagination className="mt-4">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              onClick={() => currentPage > 0 ? setCurrentPage(currentPage - 1) : 0}
+              className="cursor-pointer"
+            />
+          </PaginationItem>
+          {
+            pageNumbers.map(page => (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  onClick={() => setCurrentPage(page)}
+                  className={`border cursor-pointer ${page === currentPage && "border-red-light border-2"
+                    } `}
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ))
+          }
+          <PaginationItem>
+            <PaginationNext
+              onClick={() => currentPage < 0 ? setCurrentPage(currentPage - 1) : 0}
+              className="cursor-pointer"
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </section>
   );
 };
