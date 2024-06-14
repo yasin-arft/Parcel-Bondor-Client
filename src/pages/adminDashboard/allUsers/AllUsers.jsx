@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -41,9 +40,9 @@ const AllUsers = () => {
   console.log(currentPage);
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['all user', user?.email],
+    queryKey: ['all user', user?.email, currentPage],
     queryFn: async () => {
-      const res = await axiosSecure.get('/users/user');
+      const res = await axiosSecure.get(`/users/user?page=${currentPage}`);
       return res.data;
     }
   });
@@ -116,11 +115,6 @@ const AllUsers = () => {
           </TableBody>
         </Table>
       </div>
-      {/* <div className="space-x-2 text-center mt-4">
-        {
-          pageNumbers.map(page => <Button key={page}>{page}</Button>)
-        }
-      </div> */}
       <Pagination className="mt-4">
         <PaginationContent>
           <PaginationItem>
@@ -144,7 +138,7 @@ const AllUsers = () => {
           }
           <PaginationItem>
             <PaginationNext
-              onClick={() => currentPage < 0 ? setCurrentPage(currentPage - 1) : 0}
+              onClick={() => currentPage < totalPages ? setCurrentPage(currentPage + 1) : totalPages}
               className="cursor-pointer"
             />
           </PaginationItem>
