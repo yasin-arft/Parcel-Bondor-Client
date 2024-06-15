@@ -9,9 +9,21 @@ import deliveryVan from '../../../assets/image/deliveryVan.png';
 import lock from '../../../assets/image/lock.png';
 import tracking from '../../../assets/image/tracking.png';
 import SectionHeading from "@/components/sectionHeading/SectionHeading";
+import CountUp from 'react-countup';
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "@/hooks/useAxiosPublic";
 
 
 const OurFeatures = () => {
+  const axiosPublic = useAxiosPublic();
+  const { data, isLoading } = useQuery({
+    queryKey: ['home stats'],
+    queryFn: async () => {
+      const res = await axiosPublic.get('/homeStats');
+      return res.data;
+    }
+  });
+
   return (
     <section className="lg:my-16 md:my-12 my-6">
       <SectionHeading>Our Features</SectionHeading>
@@ -56,6 +68,44 @@ const OurFeatures = () => {
           </CardContent>
         </Card>
       </div>
+      {
+        isLoading ||
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-4 md:mt-6 md:w-4/5 mx-auto text-center">
+          <Card>
+            <CardHeader>
+              <CardTitle>Total Bookings</CardTitle>
+            </CardHeader>
+            <CardContent className='text-3xl md:text-4xl lg:text-5xl font-bold'>
+              <CountUp
+                end={data.totalBookings}
+                duration={2.5}
+              />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Total Deliveries</CardTitle>
+            </CardHeader>
+            <CardContent className='text-3xl md:text-4xl lg:text-5xl font-bold'>
+              <CountUp
+                end={data.totalDelivered}
+                duration={2.5}
+              />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Total Users</CardTitle>
+            </CardHeader>
+            <CardContent className='text-3xl md:text-4xl lg:text-5xl font-bold'>
+              <CountUp
+                end={data.totalUsers}
+                duration={2.5}
+              />
+            </CardContent>
+          </Card>
+        </div>
+      }
     </section>
   );
 };
