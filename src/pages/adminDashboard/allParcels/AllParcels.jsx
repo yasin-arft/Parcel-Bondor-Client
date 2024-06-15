@@ -51,7 +51,7 @@ const AllParcels = () => {
       <SectionHeading>{header} Parcels</SectionHeading>
 
       <div>
-        <Table className="border-y">
+        <Table className="border-y overflow-auto">
           <TableCaption>A list of your parcels.</TableCaption>
           <TableHeader>
             <TableRow>
