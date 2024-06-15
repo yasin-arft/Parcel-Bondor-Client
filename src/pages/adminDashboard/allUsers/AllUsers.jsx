@@ -35,9 +35,6 @@ const AllUsers = () => {
   const totalPages = Math.ceil(totalUser / 5);
   const pageNumbers = [...Array(totalPages).keys()];
   const [currentPage, setCurrentPage] = useState(0);
-  // console.log(pageNumbers);
-  // console.log(totalPages);
-  console.log(currentPage);
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['all user', user?.email, currentPage],
@@ -131,7 +128,7 @@ const AllUsers = () => {
                   className={`border cursor-pointer ${page === currentPage && "border-red-light border-2"
                     } `}
                 >
-                  {page}
+                  {page + 1}
                 </PaginationLink>
               </PaginationItem>
             ))

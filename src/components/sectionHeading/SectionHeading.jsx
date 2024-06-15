@@ -6,7 +6,7 @@ const SectionHeading = ({ children }) => {
 };
 
 SectionHeading.propTypes = {
-  children: PropTypes.string
+  children: PropTypes.any
 };
 
 export default SectionHeading;
