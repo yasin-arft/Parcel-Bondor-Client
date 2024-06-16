@@ -77,7 +77,11 @@ const MyDeliveryList = () => {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="mr-4">
-                        <ManageDeliveryActions parcelId={item._id} refetchMyList={refetch} />
+                        <ManageDeliveryActions
+                          parcelId={item._id}
+                          refetchMyList={refetch}
+                          position={[item.deliveryLatitude, item.deliveryLongitude]}
+                        />
                       </PopoverContent>
                     </Popover>
                   </TableCell>
