@@ -135,7 +135,7 @@ const AllUsers = () => {
           }
           <PaginationItem>
             <PaginationNext
-              onClick={() => currentPage < totalPages ? setCurrentPage(currentPage + 1) : totalPages}
+              onClick={() => currentPage < totalPages - 1 ? setCurrentPage(currentPage + 1) : totalPages - 1}
               className="cursor-pointer"
             />
           </PaginationItem>
