@@ -117,7 +117,11 @@ const Profile = () => {
                     className=" bg-red-light hover:bg-red-deep disabled:bg-gray-500 w-full"
                     disabled={form.formState.isSubmitting}
                   >
-                    Update Profile
+                    {
+                      form.formState.isSubmitting ?
+                        'Updating...' :
+                        'Update Profile'
+                    }
                   </Button>
                 </form>
               </Form>

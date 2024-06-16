@@ -81,7 +81,7 @@ const Router = createBrowserRouter([
       {
         path: 'all_users',
         element: <AllUsers />,
-        loader: () => fetch('http://localhost:5000/totalUser')
+        loader: () => fetch(`${import.meta.env.VITE_server_URL}/totalUser`)
       },
     ]
   },

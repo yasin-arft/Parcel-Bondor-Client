@@ -1,3 +1,4 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import SectionHeading from "@/components/sectionHeading/SectionHeading";
 import {
   Card,
@@ -31,9 +32,10 @@ const TopDeliveryMen = () => {
           data.map(item => (
             <Card key={item._id}>
               <CardHeader>
-                <figure>
-                  <img src={item.image} alt="Delivery van" className="w-14" />
-                </figure>
+                <Avatar className="size-14">
+                  <AvatarImage src={item.image} />
+                  <AvatarFallback>{item.name}</AvatarFallback>
+                </Avatar>
                 <CardTitle>{item.name}</CardTitle>
               </CardHeader>
               <CardContent className="flex justify-between items-center">
