@@ -14,6 +14,7 @@ import AllUsers from "@/pages/adminDashboard/allUsers/AllUsers";
 import AllDeliveryMen from "@/pages/adminDashboard/allDeliveryMen/AllDeliveryMen";
 import MyDeliveryList from "@/pages/deliveryManDashboard/myDeliveryList/MyDeliveryList";
 import MyReviews from "@/pages/deliveryManDashboard/myReviews/MyReviews";
+import Checkout from "@/pages/userDashboard/checkout/Checkout";
 
 const Router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const Router = createBrowserRouter([
       {
         path: 'update_parcel/:id',
         element: <PrivateRoute><UpdateParcel /></PrivateRoute>
+      },
+      {
+        path: 'checkout/:id',
+        element: <PrivateRoute><Checkout /></PrivateRoute>
       },
 
 

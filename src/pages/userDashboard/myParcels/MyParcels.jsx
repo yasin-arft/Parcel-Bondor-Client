@@ -169,6 +169,7 @@ const MyParcels = () => {
                   <TableCell className="text-center text-xl">
                     <Button
                       variant="outline"
+                      onClick={() => navigate(`/dashboard/checkout/${item._id}`)}
                     >
                       <MdPayment />
                     </Button>
