@@ -117,7 +117,7 @@ const MyParcels = () => {
                   <TableCell>{item.type}</TableCell>
                   <TableCell>
                     {
-                      dateFormat(item.bookingDate)
+                      dateFormat(item.requestedDeliveryDate)
                     }
                   </TableCell>
                   <TableCell className="text-center">
@@ -128,7 +128,7 @@ const MyParcels = () => {
                   </TableCell>
                   <TableCell>
                     {
-                      dateFormat(item.requestedDeliveryDate)
+                      dateFormat(item.bookingDate)
                     }
                   </TableCell>
                   <TableCell className="text-center max-w-5 break-words">{item.deliveryManId || '--'}</TableCell>
