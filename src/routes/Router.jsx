@@ -15,6 +15,7 @@ import AllDeliveryMen from "@/pages/adminDashboard/allDeliveryMen/AllDeliveryMen
 import MyDeliveryList from "@/pages/deliveryManDashboard/myDeliveryList/MyDeliveryList";
 import MyReviews from "@/pages/deliveryManDashboard/myReviews/MyReviews";
 import Checkout from "@/pages/userDashboard/checkout/Checkout";
+import PaymentSuccess from "@/pages/userDashboard/checkout/PaymentSuccess";
 
 const Router = createBrowserRouter([
   {
@@ -89,6 +90,10 @@ const Router = createBrowserRouter([
         loader: () => fetch(`${import.meta.env.VITE_server_URL}/totalUser`)
       },
     ]
+  },
+  {
+    path: '/payment_success',
+    element: <PrivateRoute><PaymentSuccess /></PrivateRoute>
   },
 ]);
 

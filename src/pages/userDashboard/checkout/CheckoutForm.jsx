@@ -3,18 +3,23 @@ import { Button } from "@/components/ui/button";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from 'react';
 import useAxiosSecure from '@/hooks/useAxiosSecure';
+import useAuth from '@/hooks/useAuth';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const CheckoutForm = ({ setPaymentError, price }) => {
+  const { user } = useAuth();
   const [clientSecret, setClientSecret] = useState("");
+  const [loading, setLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   useEffect(() => {
 
     axiosSecure.post("/create-payment-intent", { price })
       .then((res) => {
-        console.log(res.data.clientSecret);
         setClientSecret(res.data.clientSecret);
       });
 
@@ -30,7 +35,7 @@ const CheckoutForm = ({ setPaymentError, price }) => {
 
     if (card === null) return;
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: 'card',
       card
     });
@@ -38,10 +43,31 @@ const CheckoutForm = ({ setPaymentError, price }) => {
     if (error) {
       setPaymentError(error.message)
     } else {
-      console.log('payment method', paymentMethod);
       setPaymentError('')
     }
 
+    setLoading(true);
+
+    // confirm payment 
+    const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: card,
+        billing_details: {
+          name: user?.displayName || 'Unknown',
+          email: user?.email || 'Unknown'
+        }
+      }
+    });
+
+    if (confirmError) {
+      toast.error('Error! Try again')
+    } else {
+      if (paymentIntent.status === "succeeded") {
+        navigate('/payment_success');
+      }
+    }
+
+    setLoading(false);
   }
 
   return (
@@ -64,10 +90,14 @@ const CheckoutForm = ({ setPaymentError, price }) => {
       />
       <Button
         type="submit"
-        disabled={!stripe || !clientSecret}
+        disabled={!stripe || !elements || !clientSecret || loading}
         className='bg-red-light text-white hover:bg-red-deep  disabled:bg-gray-500'
       >
-        Pay
+        {
+          loading ?
+            'Processing...' :
+            'Pay'
+        }
       </Button>
     </form>
   );

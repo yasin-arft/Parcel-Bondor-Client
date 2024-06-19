@@ -39,8 +39,6 @@ const ManageDeliveryActions = ({ parcelId, refetchMyList, position }) => {
     });
   }
 
-  console.log(position);
-
   return (
     <div className="flex flex-col gap-3 justify-center">
       <Dialog>
