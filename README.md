@@ -1,9 +1,5 @@
 # Parcel Bondor
 
-Admin Username: Admin
-
-Admin Password: adminn
-
 [View live](https://parcel-bondor.web.app)
 -
 
