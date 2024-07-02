@@ -55,7 +55,11 @@ VITE_server_URL=
 VITE_payment_PK=
 ```
 
-### 3: Run the project
+### 4: Run the project
 ```
 npm run dev
 ```
+
+### 5: Open the project in your browser
+
+Done!
