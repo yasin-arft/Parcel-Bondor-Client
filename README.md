@@ -19,3 +19,43 @@ Parcel Bondor is a parcel management web application designed to streamline the 
 - Firebase(auth)
 - Stripe Payment system
 - React hook form, Tanstack query, Axios, etc.
+
+## To run this project locally follow this steps
+
+### 1: Clone the repository.
+```
+git clone https://github.com/yasin-arft/Parcel-Bondor-Client.git
+```
+- For server repository visit: https://github.com/yasin-arft/Parcel-Bondor-Server and setup the server
+
+### 2: Install dependencies.
+```
+npm install
+```
+### 3: Set up variables
+- Create a `.env` file in the root directory
+- Set Up necessary variables
+
+```
+<!-- *Firebase SDKs* -->
+VITE_apiKey=
+VITE_authDomain=
+VITE_projectId=
+VITE_storageBucket=
+VITE_messagingSenderId=
+VITE_appId=
+
+<!-- *ImageBB api* -->
+VITE_image_hosting_key=
+
+<!-- *Server url* -->
+VITE_server_URL=
+
+<!-- *Stripe publishable key* -->
+VITE_payment_PK=
+```
+
+### 3: Run the project
+```
+npm run dev
+```
