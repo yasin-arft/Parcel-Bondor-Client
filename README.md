@@ -7,6 +7,7 @@ Parcel Bondor is a parcel management web application designed to streamline the 
 
 ## Updates
 1. Show and hide password in the login and registration
+2. Contact feature added
 
 ## Main Features
 - **Parcel Booking:** After login as an user, an user can easily book parcels by just filling a form with necessary information.
