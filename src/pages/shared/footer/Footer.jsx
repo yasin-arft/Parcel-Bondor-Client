@@ -16,7 +16,7 @@ const Footer = () => {
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/dashboard'>Dashboard</Link></li>
             <li><Link to='/about_us'>About Us</Link></li>
-            <li><Link to='/contact'>Contact Us</Link></li>
+            <li><Link to='/contact_us'>Contact Us</Link></li>
           </ul>
         </div>
         <div className='flex-1'>

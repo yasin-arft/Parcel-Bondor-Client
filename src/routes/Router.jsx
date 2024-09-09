@@ -16,6 +16,7 @@ import MyDeliveryList from "@/pages/deliveryManDashboard/myDeliveryList/MyDelive
 import MyReviews from "@/pages/deliveryManDashboard/myReviews/MyReviews";
 import Checkout from "@/pages/userDashboard/checkout/Checkout";
 import PaymentSuccess from "@/pages/userDashboard/checkout/PaymentSuccess";
+import ContactUs from "@/pages/contactUs/ContactUs";
 
 const Router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const Router = createBrowserRouter([
       {
         path: '/sign_up',
         element: <SignUp />
+      },
+      {
+        path: '/contact_us',
+        element: <ContactUs />
       }
     ]
   },
