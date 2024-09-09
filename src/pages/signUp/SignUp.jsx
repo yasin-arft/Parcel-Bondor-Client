@@ -24,6 +24,8 @@ import useAuth from "@/hooks/useAuth"
 import toast from "react-hot-toast"
 import useAxiosPublic from "@/hooks/useAxiosPublic"
 import { hostImage } from "@/utils/hostImage"
+import { FaEye, FaEyeSlash } from "react-icons/fa"
+import { useState } from "react"
 
 const signUpSchema = z.object({
   name: z
@@ -49,6 +51,7 @@ const signUpSchema = z.object({
 })
 
 const SignUp = () => {
+  const [hidePassword, setHidePassword] = useState(true);
   const { createUser, updateUserProfile, loading, setLoading } = useAuth();
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
@@ -162,8 +165,18 @@ const SignUp = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input type="password" placeholder="Type password" {...field} />
+                      <FormControl >
+                        <div className="relative">
+                          <Input type={hidePassword ? "password" : "text"} placeholder="Type password" {...field} />
+                          <span
+                            onClick={() => setHidePassword(!hidePassword)}
+                            className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer p-1 w-6"
+                          >
+                            {
+                              hidePassword ? <FaEye /> : <FaEyeSlash />
+                            }
+                          </span>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -225,7 +238,7 @@ const SignUp = () => {
           <p className="text-center mt-5">Already have an account? <Link to={'/login'} className="underline text-red-light">Login</Link></p>
         </div>
       </div>
-    </section>
+    </section >
   );
 };
 

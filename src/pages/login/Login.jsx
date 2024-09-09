@@ -15,6 +15,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import SocialLogins from "../shared/socialLogins/SocialLogins"
 import useAuth from "@/hooks/useAuth"
 import toast from "react-hot-toast"
+import { FaEye, FaEyeSlash } from "react-icons/fa"
+import { useState } from "react"
 
 const loginSchema = z.object({
   email: z
@@ -27,6 +29,7 @@ const loginSchema = z.object({
 })
 
 const Login = () => {
+  const [hidePassword, setHidePassword] = useState(true);
   const { loginUser, loading, setLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -82,7 +85,17 @@ const Login = () => {
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input type="password" placeholder="Type password" {...field} />
+                        <div className="relative">
+                          <Input type={hidePassword ? "password" : "text"} placeholder="Type password" {...field} />
+                          <span
+                            onClick={() => setHidePassword(!hidePassword)}
+                            className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer p-1 w-6"
+                          >
+                            {
+                              hidePassword ? <FaEye /> : <FaEyeSlash />
+                            }
+                          </span>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
